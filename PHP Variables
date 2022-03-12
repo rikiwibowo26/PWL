@@ -1,1 +1,19 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<?php
+$txt = "belajar PHP!";
+$x = 5;
+$y = 11.5;
+
+echo $txt;
+echo "<br>";
+echo $x;
+echo "<br>";
+echo $y;
+?>
+
+</body>
+</html>
 
