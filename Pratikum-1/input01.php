@@ -1,12 +1,12 @@
-<html>
-<head><title>Pengolahan Form</title></head>
-<body>
-<FORM ACTION="" METHOD="POST" NAME="input">
-Nama Anda : <input type="text" name="nama"><br>
-<input type="submit" name="Input" value="Input">
-</FORM>
-</body>
-</html>
 <?php
-if (isset($_POST['Input'])) { $nama = $_POST['nama'];
-echo "Nama Anda : <b>$nama</b>"; } ?>
+$arrBuah = array ("Mangga", "Apel", "Pisang", "Jeruk");
+echo $arrBuah[0]; //Mangga
+echo $arrBuah[3]; //Jeruk
+$arrWarna = array();
+$arrWarna[] = "Merah";
+$arrWarna[] = "Biru";
+$arrWarna[] = "Hijau";
+$arrWarna[] = "Putih";
+echo $arrWarna[0]; //Merah
+echo $arrWarna[2]; //Hijau
+?>
