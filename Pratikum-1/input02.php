@@ -1,10 +1,12 @@
-<html>
-<head><title>Pengolahan Form</title></head>
-<body>
-<form action ="proses02.php" method="post"
-name="input">
-Nama Anda : <input type="text" name="nama"><br>
-<input type="submit" name="Input" value="Input">
-</form>
-</body>
-</html>
+<?php
+$arrNilai = array ("Ani" => 80, "Otim" => 90, "Ana" => 75, "Budi"
+=> 85);
+echo $arrNilai['Ani']; //80
+echo $arrNilai['Otim']; //90
+$arrNilai = array();
+$arrNilai['Ami'] = 80;
+$arrNilai['Asma'] = 95;
+$arrNilai['Sri'] = 77;
+echo $arrNilai['Asma']; //95
+echo $arrNilai['Ami']; //80
+?>
