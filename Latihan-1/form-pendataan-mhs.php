@@ -11,7 +11,7 @@
     </style>
 </head>
 <body>
-    <form action="form-pendataan-mhs.php" method="post">
+    <form action="latihan4.php" method="post">
     <table>
     <tr>
         <td>Nim</td>
@@ -41,9 +41,9 @@
     </tr>
     <tr>
         <td>Catatan Khusus</td>
-        <td><input type="checkbox" name="hadir" value="hadir">Kehadiran >=80%</td>
-        <td><input type="checkbox" name="aktif" value="interaktif">Interaktif dikelas</td>
-        <td><input type="checkbox" name="tugas" value="tidak terlambat">Tidak Terlambat mengumpulkan tugas</td>
+        <td><input type="checkbox" name="catatan[]" value="hadir">Kehadiran >=70%</td>
+        <td><input type="checkbox" name="catatan[]" value="interaktif">Interaktif dikelas</td>
+        <td><input type="checkbox" name="catatan[]" value="tidak terlambat">Tidak Terlambat mengumpulkan tugas</td>
     </tr>
     <tr>
         <td><input type="submit" value="masukkan" name="submit"></td>
@@ -53,19 +53,40 @@
     </form>
 
     <?php
-    if (isset($_POST["submit"])){
-        $nim=$_POST["nim"];
-        $programStudi=$_POST["programStudi"];
-        $uts=$_POST["nilaiuts"];
-        $uas=$_POST["nilaiuas"];
-        $tugas=$_POST["nilaitugas"];
-        $nilaiAkhir = (($uas*4/10)+($uts*3/10)+($tugas*3/10));
+        if(isset($_POST["submit"])){
+        $Data = array("nim"=>$_POST["nim"],"programStudi"=>$_POST["programStudi"],"uts"=>$_POST["nilaiuts"],
+        "uas"=>$_POST["nilaiuas"],"tugas"=>$_POST["nilaitugas"],"catatan" => $_POST["catatan"]);
         
-    }
-    ?>
+        $nilaiAkhir = (($Data["uas"]*4/10)+($Data["uts"]*3/10)+($Data["tugas"]*3/10));
+        cetakTabel($Data,$nilaiAkhir);
+            
+        }
 
-    <br>
-    <table>
+    function validNilai($Data,$nilaiAkhir){
+        if ($Data["uas"] && $Data["uts"] && $Data["tugas"] >100){
+            return "Nilai UAS/UTS/Tugas tidak boleh lebih dari 100";} 
+        else{
+            return $nilaiAkhir;
+        }
+    }
+
+    function cekNilai($nilaiAkhir){
+        if ($nilaiAkhir >= 60){
+            return "LULUS";} 
+        else{
+            return "Tidak Lulus";
+        }
+    }
+    
+    function getCatatan($Data){
+        foreach($Data["catatan"] as $cat){
+            echo"<li>".$cat."</li>";
+        }
+    }
+    
+    function cetakTabel($Data,$nilaiAkhir){
+        echo"
+        <table>
         <tr>
             <th>Program Studi</th>
             <th>NIM</th>
@@ -73,46 +94,31 @@
             <th>STATUS</th>
             <th>Catatan Khusus</th>
         </tr>
+        
         <tr>
-            <td><?php if (isset($_POST["submit"])){
-            echo $programStudi;} 
-            ?></td>
-            <td><?php if (isset($_POST["submit"])){
-            echo $nim;}
-            ?></td>
-            <td><?php if (isset($_POST["submit"])){
-                if ($uas && $uts && $tugas >100){
-                echo "Nilai UAS/UTS/Tugas tidak boeh lebih dari 90";} 
-                else{
-                    echo $nilaiAkhir;
-                }
-                    }
-                ?>
-            </td>
-            <td><?php if (isset($_POST["submit"])){
-                if ($nilaiAkhir >= 70){
-                echo "LULUS";} 
-                else{
-                    echo "Tidak Lulus";
-                }
-                    }
-                ?></td>
-            <td><ul><?php
-            if (isset($_POST["hadir"])){
-                $catatan1=$_POST["hadir"];
-                echo "<li>".$catatan1."</li>";
-            }
-            if (isset($_POST["aktif"])){
-                $catatan2=$_POST["aktif"];
-                echo "<li>".$catatan2."</li>";
-            }
-            if (isset($_POST["tugas"])){
-                $catatan3=$_POST["tugas"];
-                echo "<li>".$catatan3."</li>";
-            }
-            ?></ul></td>
+        <td>
+            ".$Data["programStudi"]."
+        </td>
+        <td>
+            ".$Data["nim"]."
+        </td>
+        <td>
+            ".validNilai($Data,$nilaiAkhir)."
+        </td>
+        <td>
+            ".cekNilai($nilaiAkhir)."
+        </td>
+        <td><ul>
+            ",getCatatan($Data),"
+        </ul></td>
         </tr>
-    </table>
+        </table>
+        ";
+    }
+
+        
+        
     
+    ?>
 </body>
 </html>
